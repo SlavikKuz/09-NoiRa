@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NAudio.WinForms" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ComputerVision\ComputerVisionLib.csproj" />
+    <ProjectReference Include="..\ImageProvider\ImageProviderLib.csproj" />
+    <ProjectReference Include="..\Player\PlayerLib.csproj" />
+    <ProjectReference Include="..\SemanticProcessor\SemanticProcessorLib.csproj" />
+    <ProjectReference Include="..\SoundFinder\SoundFinderLib.csproj" />
+  </ItemGroup>
+
+</Project>
