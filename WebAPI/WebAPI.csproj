@@ -9,11 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ComputerVision\ComputerVisionLib.csproj" />
-    <ProjectReference Include="..\ImageProvider\ImageProviderLib.csproj" />
-    <ProjectReference Include="..\Player\PlayerLib.csproj" />
-    <ProjectReference Include="..\SemanticProcessor\SemanticProcessorLib.csproj" />
-    <ProjectReference Include="..\SoundFinder\SoundFinderLib.csproj" />
+    <ProjectReference Include="..\ComputerVisionLib\ComputerVisionLib.csproj" />
+    <ProjectReference Include="..\ImageProviderLib\ImageProviderLib.csproj" />
+    <ProjectReference Include="..\PlayerLib\PlayerLib.csproj" />
+    <ProjectReference Include="..\SemanticProcessorLib\SemanticProcessorLib.csproj" />
+    <ProjectReference Include="..\SoundFinderLib\SoundFinderLib.csproj" />
   </ItemGroup>
+
+
 
 </Project>

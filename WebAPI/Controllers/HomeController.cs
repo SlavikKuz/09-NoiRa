@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using ComputerVisionLib;
 using ImageProviderLib;
 using NAudio.Wave;
