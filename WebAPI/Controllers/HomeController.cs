@@ -1,11 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ComputerVisionLib;
 using ImageProviderLib;
 using NAudio.Wave;
+using Newtonsoft.Json;
 using PlayerLib;
 using SemanticProcessorLib;
 using SoundFinderLib;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -23,6 +31,14 @@ namespace WebAPI.Controllers
             var semanticResults = SemanticProcessor.ProcessResults(resultAmazon, resultAzure, resultGoogle);
 
             //client to pdf;
+
+
+
+
+
+
+
+
 
             var soundFinder = new SoundFinder(semanticResults.WordsOfDescription, false);
 
@@ -46,6 +62,48 @@ namespace WebAPI.Controllers
 
             return View(model);
         }
+
+        //public async Task<PdfCreatorResponse> ProcessToPdf(PdfCreatorRequest request, CancellationToken cancellationToken)
+        //{
+        //    var urlBuilder = new StringBuilder();
+        //    urlBuilder.Append(@"localhost").Append("/PdfCreator/");
+
+        //    var client = new HttpClient();
+
+        //    try
+        //    {
+        //        using (var httpRequest = new HttpRequestMessage())
+        //        {
+        //            var content = new StringContent(JsonConvert.SerializeObject(request));
+        //            content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+        //            httpRequest.Content = content;
+        //            httpRequest.Method = new HttpMethod("PUT");
+        //            httpRequest.Headers.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+        //            var url = urlBuilder.ToString();
+        //            httpRequest.RequestUri = new Uri(url, UriKind.RelativeOrAbsolute);
+
+        //            var response = await client
+        //                .SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
+        //                .ConfigureAwait(false);
+
+        //            if ((int) response.StatusCode != 200)
+        //                return new PdfCreatorResponse();
+
+        //            var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+        //            var type = JsonConvert.DeserializeObject<T>(responseText, JsonSErializerSettings);
+        //            return new ObjectRespo
+        //        }
+        //    }
+        //    catch (Exception e)
+        //    {
+        //    }
+        //    finally
+        //    {
+        //        client.Dispose();
+        //    }
+        //}
 
         public class IndexViewModel
         {

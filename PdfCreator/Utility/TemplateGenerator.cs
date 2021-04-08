@@ -3,21 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PDF_Generator.Utility;
 using WebAPI.Models;
 
 namespace PdfCreator.Utility
 {
-    public class TemplateGenerator
+    public static class TemplateGenerator
     {
-        private List<DataItem> _dataItem;
-
-        public TemplateGenerator(List<DataItem> dataItem)
+        public static string GetHTMLString()
         {
-            _dataItem = dataItem;
-        }
+            var employees = DataStorage.GetAllEmployees();
 
-        public string GetHTMLString()
-        {
             var sb = new StringBuilder();
             sb.Append(@"
                         <html>
@@ -32,19 +28,22 @@ namespace PdfCreator.Utility
                                         <th>Age</th>
                                         <th>Gender</th>
                                     </tr>");
-            foreach (var emp in _dataItem)
+
+            foreach (var emp in employees)
             {
                 sb.AppendFormat(@"<tr>
                                     <td>{0}</td>
                                     <td>{1}</td>
                                     <td>{2}</td>
                                     <td>{3}</td>
-                                  </tr>", emp.GoogleDescription, emp.AmazonDescription, emp.AzureDescription, emp.Image);
+                                  </tr>", emp.Name, emp.LastName, emp.Age, emp.Gender);
             }
+
             sb.Append(@"
                                 </table>
                             </body>
                         </html>");
+
             return sb.ToString();
         }
     }
