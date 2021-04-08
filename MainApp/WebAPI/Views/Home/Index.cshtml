@@ -1,0 +1,76 @@
+﻿@{ ViewData["Title"] = "Sound Randomizer"; }
+@model WebAPI.Controllers.HomeController.IndexViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebAPI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body style="background-color: #@Model.Color;">
+<div class="container mt-3">
+    <main role="main" class="pb-3">
+        <div class="card">
+            <div class="card-header">
+                <div align="center">
+                    @foreach (var i in Model.ImageDescription)
+                    {<a> @i </a>}
+                </div>
+            </div>
+            <div class="card-body">
+                <figure class="card ml-3 mr-3">
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.Image))"/>
+                        </div>
+                        <div class="col-sm">
+                            <div>
+                                <font size="1">
+                                    @foreach (var i in Model.ImageDescription)
+                                    {
+                                        if (Model.BackSounds.Where(b => b.Contains(i)).Count() > 0)
+                                        {
+                                            <font size="4">
+                                                @i <br />
+                                            </font>
+                                        }
+                                        foreach (var j in Model.BackSounds.Where(b => b.Contains(i)))
+                                        {
+                                            if (Model.LinksToPlay.Contains(j))
+                                            {
+                                                <b>
+                                                    @j</b>
+                                                <br />
+                                            }
+                                            else
+                                            {    
+                                                @j <br />
+                                            }
+                                        }
+                                    }
+                                </font>
+                            </div>
+                        </div>
+                    </div>
+                </figure>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; 2021 - WebAPI
+    </div>
+</footer>
+
+</body>
+</html>
+
+
+
+

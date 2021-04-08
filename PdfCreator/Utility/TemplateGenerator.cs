@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PDF_Generator.Utility;
-using WebAPI.Models;
 
 namespace PdfCreator.Utility
 {

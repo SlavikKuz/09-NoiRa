@@ -2,10 +2,7 @@
 [Tt]humbs.db
 *.DS_Store
 
-/WebAPI/wwwroot/source/Keys.txt
-
-/TEST
-/Source/Ember/bin
+MainApp/WebAPI/wwwroot/source/Keys.txt
 
 #Visual Studio files
 *.[Oo]bj
@@ -30,19 +27,19 @@
 *.sdf
 *.opensdf
 *.unsuccessfulbuild
-ipch/
+MainApp/ipch/
 obj/
-[Bb]in
-[Dd]ebug*/
-[Rr]elease*/
-Ankh.NoLoad
+MainApp/[Bb]in
+MainApp/[Dd]ebug*/
+MainApp/[Rr]elease*/
+MainApp/Ankh.NoLoad
 
 #MonoDevelop
 *.pidb
 *.userprefs
 
 #Tooling
-_ReSharper*/
+MainApp/_ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
 *.sass-cache
@@ -57,7 +54,7 @@ _ReSharper*/
 ~$*
 
 #NuGet
-packages/
+MainApp/packages/
 
 #ncrunch
 *ncrunch*

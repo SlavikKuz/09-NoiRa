@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using PdfCreator.Utility;
-using WebAPI.Models;
 
 namespace PdfCreator.Controllers
 {
@@ -23,7 +25,32 @@ namespace PdfCreator.Controllers
         }
 
         [HttpGet]
-        public string CreatePDF()
+        public HttpResponseMessage CreatePDF()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.BadRequest);
+            var pdfFile = EncodeToPDF();
+
+            if (pdfFile != null)
+            {
+                var contentLength = pdfFile.Length;
+
+                response.StatusCode = HttpStatusCode.OK;
+                response.Content = new StreamContent(new MemoryStream(pdfFile));
+                response.Content.Headers.ContentLength = contentLength;
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                { 
+                    FileName = "Result.pdf"
+                };
+            }
+            else
+            {
+                response.StatusCode = HttpStatusCode.NotFound;
+            }
+            return response;
+        }
+
+        private byte[] EncodeToPDF()
         {
             var globalSettings = new GlobalSettings
             {
@@ -31,8 +58,7 @@ namespace PdfCreator.Controllers
                 Orientation = Orientation.Portrait,
                 PaperSize = PaperKind.A4,
                 Margins = new MarginSettings {Top = 10},
-                DocumentTitle = "PDF Report",
-                Out = @"D:\PDFCreator\Employee_Report.pdf"
+                DocumentTitle = "PDF Report"
             };
             var objectSettings = new ObjectSettings
             {
@@ -51,8 +77,8 @@ namespace PdfCreator.Controllers
                 GlobalSettings = globalSettings,
                 Objects = {objectSettings}
             };
-            _converter.Convert(pdf);
-            return "Successfully created PDF document.";
+
+            return _converter.Convert(pdf);
         }
     }
 }
