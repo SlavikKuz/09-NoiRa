@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace SoundFinderLib
     {
         private const string SoundFxDirectory = @"F:\BackNoRa\fx\";
         private const string SoundBacksDirectory = @"F:\BackNoRa\background\";
-        private const string AllNounsLink = @"D:\Repos\09 - BackNoRa\WebAPI\wwwroot\source\91K nouns.txt";
+        private string AllNounsLink = Environment.CurrentDirectory + @"\wwwroot\source\91K nouns.txt";
 
         private List<string> allNouns { get; set; }
 

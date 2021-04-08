@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Newtonsoft.Json;
 
 namespace ComputerVisionLib
@@ -11,7 +12,7 @@ namespace ComputerVisionLib
         public string AmazonSecretKey { get; set; }
         public string GoogleCredentials { get; set; }
 
-        private readonly string _filePath = @"D:\Repos\09 - BackNoRa\WebAPI\wwwroot\source\Keys.txt";
+        private readonly string _filePath = Environment.CurrentDirectory + @"\wwwroot\source\Keys.txt";
 
         public KeysLib()
         {

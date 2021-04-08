@@ -32,8 +32,10 @@
       "WebAPI/1.0.0": {
         "dependencies": {
           "ComputerVisionLib": "1.0.0",
+          "DinkToPdf": "1.0.8",
           "ImageProviderLib": "1.0.0",
           "NAudio.WinForms": "2.0.0",
+          "PdfCreatorLib": "1.0.0",
           "PlayerLib": "1.0.0",
           "SemanticProcessorLib": "1.0.0",
           "SoundFinderLib": "1.0.0",
@@ -316,7 +318,7 @@
           "System.Threading.Tasks.Reference": "4.1.2.0",
           "System.Threading.Tasks.Extensions.Reference": "4.3.1.0",
           "System.Threading.Tasks.Parallel": "4.0.4.0",
-          "System.Threading.Thread": "4.1.2.0",
+          "System.Threading.Thread.Reference": "4.1.2.0",
           "System.Threading.ThreadPool": "4.1.2.0",
           "System.Threading.Timer.Reference": "4.1.2.0",
           "System.Transactions": "4.0.0.0",
@@ -370,6 +372,26 @@
         },
         "compile": {
           "lib/netcoreapp3.1/AWSSDK.Rekognition.dll": {}
+        }
+      },
+      "DinkToPdf/1.0.8": {
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "System.Collections.Concurrent": "4.3.0",
+          "System.Globalization": "4.3.0",
+          "System.Reflection.TypeExtensions": "4.3.0",
+          "System.Runtime": "4.3.0",
+          "System.Runtime.InteropServices": "4.3.0",
+          "System.Threading.Thread": "4.0.0"
+        },
+        "runtime": {
+          "lib/netstandard1.6/DinkToPdf.dll": {
+            "assemblyVersion": "1.0.8.0",
+            "fileVersion": "1.0.8.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard1.6/DinkToPdf.dll": {}
         }
       },
       "Google.Api.CommonProtos/2.2.0": {
@@ -1414,6 +1436,11 @@
           "System.Threading.Tasks": "4.3.0"
         }
       },
+      "System.Threading.Thread/4.0.0": {
+        "dependencies": {
+          "System.Runtime": "4.3.0"
+        }
+      },
       "System.Threading.Timer/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -1476,6 +1503,17 @@
         },
         "compile": {
           "ImageProviderLib.dll": {}
+        }
+      },
+      "PdfCreatorLib/1.0.0": {
+        "dependencies": {
+          "DinkToPdf": "1.0.8"
+        },
+        "runtime": {
+          "PdfCreatorLib.dll": {}
+        },
+        "compile": {
+          "PdfCreatorLib.dll": {}
         }
       },
       "PlayerLib/1.0.0": {
@@ -3197,7 +3235,7 @@
         },
         "compileOnly": true
       },
-      "System.Threading.Thread/4.1.2.0": {
+      "System.Threading.Thread.Reference/4.1.2.0": {
         "compile": {
           "System.Threading.Thread.dll": {}
         },
@@ -3356,6 +3394,13 @@
       "sha512": "sha512-N0+3dBQlVXJAkW7gW6JJ/alGcMUzLOfehFNahrzxOEpRxm4sZb3i3rN7WbUSgi/UvtG0WHtPXqYQYS7qjjOIcQ==",
       "path": "awssdk.rekognition/3.7.0.7",
       "hashPath": "awssdk.rekognition.3.7.0.7.nupkg.sha512"
+    },
+    "DinkToPdf/1.0.8": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wJDlcNXjQ+OnBFwh3LBeAXgrXqlKl0RsgN60XpxEFbyqzdaG9ASb5HTXQjXQPaBguSCOrGZZESPnpcng34TEkw==",
+      "path": "dinktopdf/1.0.8",
+      "hashPath": "dinktopdf.1.0.8.nupkg.sha512"
     },
     "Google.Api.CommonProtos/2.2.0": {
       "type": "package",
@@ -4057,6 +4102,13 @@
       "path": "system.threading.tasks.extensions/4.3.0",
       "hashPath": "system.threading.tasks.extensions.4.3.0.nupkg.sha512"
     },
+    "System.Threading.Thread/4.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-gIdJqDXlOr5W9zeqFErLw3dsOsiShSCYtF9SEHitACycmvNvY8odf9kiKvp6V7aibc8C4HzzNBkWXjyfn7plbQ==",
+      "path": "system.threading.thread/4.0.0",
+      "hashPath": "system.threading.thread.4.0.0.nupkg.sha512"
+    },
     "System.Threading.Timer/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -4084,6 +4136,11 @@
       "sha512": ""
     },
     "ImageProviderLib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PdfCreatorLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -5503,7 +5560,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "System.Threading.Thread/4.1.2.0": {
+    "System.Threading.Thread.Reference/4.1.2.0": {
       "type": "referenceassembly",
       "serviceable": false,
       "sha512": ""

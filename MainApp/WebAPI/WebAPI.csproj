@@ -5,15 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DinkToPdf" Version="1.0.8" />
     <PackageReference Include="NAudio.WinForms" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ComputerVisionLib\ComputerVisionLib.csproj" />
     <ProjectReference Include="..\ImageProviderLib\ImageProviderLib.csproj" />
+    <ProjectReference Include="..\PdfCreatorLib\PdfCreatorLib.csproj" />
     <ProjectReference Include="..\PlayerLib\PlayerLib.csproj" />
     <ProjectReference Include="..\SemanticProcessorLib\SemanticProcessorLib.csproj" />
     <ProjectReference Include="..\SoundFinderLib\SoundFinderLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 
 
