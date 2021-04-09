@@ -1,5 +1,5 @@
 ﻿@{ ViewData["Title"] = "Sound Randomizer"; }
-@model WebAPI.Controllers.HomeController.IndexViewModel
+@model IndexViewModel
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,12 +16,11 @@
         <div class="card">
             <div class="card-header">
                 <div align="center">
-                    @foreach (var i in Model.ImageDescription)
-                    {<a> @i </a>}
+                    <a> @Model.ImageCaptions </a>
                 </div>
             </div>
             <div class="card-body">
-                <figure class="card ml-3 mr-3">
+                <figure class="card ml-3 mr-3 mb-3">
                     <div class="row">
                         <div class="col-sm">
                             <img src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(Model.Image))"/>
@@ -61,13 +60,6 @@
         </div>
     </main>
 </div>
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - WebAPI
-    </div>
-</footer>
-
 </body>
 </html>
 

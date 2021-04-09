@@ -1507,7 +1507,8 @@
       },
       "PdfCreatorLib/1.0.0": {
         "dependencies": {
-          "DinkToPdf": "1.0.8"
+          "DinkToPdf": "1.0.8",
+          "SemanticProcessorLib": "1.0.0"
         },
         "runtime": {
           "PdfCreatorLib.dll": {}

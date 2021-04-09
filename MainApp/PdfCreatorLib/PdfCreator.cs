@@ -1,48 +1,53 @@
-﻿using System.IO;
+﻿using System.Drawing;
+using System.IO;
 using DinkToPdf;
+using SemanticProcessorLib;
 
 namespace PdfCreatorLib
 {
     public class PdfCreator
     {
-        private readonly byte[] _pdf;
+        private byte[] _pdf;
+        private readonly ObjectSettings _objectSettings;
+        private readonly GlobalSettings _globalSettings;
+        private readonly BasicConverter _converter;
 
-        public PdfCreator()
+        public PdfCreator(SemanticImage results, string imagePath, string filePath)
         {
-            var converter = BasicConverterCustom.Instance;
+            var pdfStylesPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "source", "PdfStyles.css");
 
-            var globalSettings = new GlobalSettings
+            _converter = BasicConverterCustom.Instance;
+
+            _globalSettings = new GlobalSettings
             {
                 ColorMode = ColorMode.Color,
                 Orientation = Orientation.Portrait,
-                PaperSize = PaperKind.Letter,
-                Margins = new MarginSettings { Top = 10, Left = 10, Right = 10, Bottom = 10 },
+                PaperSize = PaperKind.A4,
+                Margins = new MarginSettings { Top = 0, Left = 0, Right = 0, Bottom = 0 },
                 DocumentTitle = "PDF Report"
             };
-            var objectSettings = new ObjectSettings
+
+            _objectSettings = new ObjectSettings
             {
                 PagesCount = true,
-                HtmlContent = TemplateProvider.GetHTMLString(),
                 WebSettings =
                 {
                     DefaultEncoding = "utf-8",
-                    UserStyleSheet = Path.Combine(Directory.GetCurrentDirectory(), "assets", "styles.css")
+                    UserStyleSheet = pdfStylesPath
                 },
-                HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
-                FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
+                //HeaderSettings = { FontName = "Arial", FontSize = 9, Right = "Page [page] of [toPage]", Line = true },
+                //FooterSettings = { FontName = "Arial", FontSize = 9, Line = true, Center = "Report Footer" }
             };
+
+            _objectSettings.HtmlContent = TemplateProvider.GetHTMLString(results, imagePath);
 
             var pdf = new HtmlToPdfDocument()
             {
-                GlobalSettings = globalSettings,
-                Objects = { objectSettings }
+                GlobalSettings = _globalSettings,
+                Objects = { _objectSettings }
             };
 
-            _pdf = converter.Convert(pdf);
-        }
-
-        public void ToFile(string filePath)
-        {
+            _pdf = _converter.Convert(pdf);
             File.WriteAllBytes(filePath, _pdf);
         }
     }

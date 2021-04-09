@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Security;
@@ -20,6 +22,7 @@ using PlayerLib;
 using SemanticProcessorLib;
 using SoundFinderLib;
 using PdfCreatorLib;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -32,32 +35,32 @@ namespace WebAPI.Controllers
 
             var resultAmazon = computerVision.VisorAmazon.JSON;
             var resultAzure = computerVision.VisorAzure.JSON;
-            var resultGoogle = computerVision.VisorGoogle.JSON;
+            var resultGoogle = computerVision.VisorGoogle.JsonToDictionary;
 
-            var pdf = new PdfCreator();
-            pdf.ToFile(@"D:\1.pdf");
+            var semanticProcessor = new SemanticProcessor(resultAmazon, resultAzure, resultGoogle);
 
+            var imagePath = Environment.CurrentDirectory + @"\wwwroot\source\temp.jpg";
+            System.IO.File.WriteAllBytes(imagePath, imageProvider.ImageToStream().ToArray());
 
+            var semanticResult = semanticProcessor.GetResult();
+            var pdf = new PdfCreator(semanticResult, imagePath, Environment.CurrentDirectory + @"\wwwroot\source\noiset.pdf");
 
-
-
-            var semanticResults = SemanticProcessor.ProcessResults(resultAmazon, resultAzure, resultGoogle);
-
-            var soundFinder = new SoundFinder(semanticResults.WordsOfDescription, false);
+            var soundFinder = new SoundFinder(semanticResult.Words.Select(w=>w.Word).ToList(), false);
 
             var kit = new DrumKit(soundFinder.SoundLinksBacks, soundFinder.SoundLinksFX);
             var pattern = new DrumPattern(kit.SoundScapes);
             var waveOut = new WaveOut();
-            var patternSequencer = new DrumPatternSampleProvider(pattern, kit) { Tempo = 100 };
+            var patternSequencer = new DrumPatternSampleProvider(pattern, kit) {Tempo = 100};
             waveOut.Init(patternSequencer);
             waveOut.Play();
 
             var model = new IndexViewModel()
             {
                 Image = imageProvider.ImageToStream().ToArray(),
-                ImageDescription = new List<string>(),
+                ImageCaptions = semanticResult.ImageCaption,
+                ImageDescription = semanticResult.Words.Select(w => w.Word).ToList(),
                 BackSounds = soundFinder.SoundLinksBacks,
-                Color = semanticResults.Color,
+                Color = semanticResult.Color,
                 LinksToPlay = kit.LinksToPlay
             };
 
@@ -65,18 +68,5 @@ namespace WebAPI.Controllers
 
             return View(model);
         }
-
-        public class IndexViewModel
-        {
-            public byte[] Image { get; set; }
-            public List<string> ImageDescription { get; set; }
-            public List<string> BackSounds { get; set; }
-            public List<string> LinksToPlay { get; set; }
-            public string Color { get; set; }
-        }
-    }
-
-    internal class GlobalSettings
-    {
     }
 }

@@ -9,9 +9,6 @@ namespace SoundFinderLib
     {
         private const string SoundFxDirectory = @"F:\BackNoRa\fx\";
         private const string SoundBacksDirectory = @"F:\BackNoRa\background\";
-        private string AllNounsLink = Environment.CurrentDirectory + @"\wwwroot\source\91K nouns.txt";
-
-        private List<string> allNouns { get; set; }
 
         private List<string> allBackFiles { get; set; }
         private List<string> allFxFiles { get; set; }
@@ -23,8 +20,6 @@ namespace SoundFinderLib
         {
             if(processLib)
                 ProcessLib(60, 10);
-
-            GetAllNouns();
 
             allBackFiles = Directory.GetFiles(SoundBacksDirectory, "*.wav", SearchOption.AllDirectories).ToList();
             SoundLinksBacks = FindSoundFiles(imageWords, allBackFiles);
@@ -45,10 +40,9 @@ namespace SoundFinderLib
         {
             var soundFiles = new List<string>();
 
-            foreach (var word in imageWords)
-                if(allNouns.Contains(word))
-                    soundFiles.AddRange(FindSoundFile(word, allFiles));
-            
+            foreach (var word in imageWords) 
+                soundFiles.AddRange(FindSoundFile(word, allFiles));
+
             return soundFiles;
         }
 
@@ -63,11 +57,6 @@ namespace SoundFinderLib
                 f.Replace("_", " ").Replace("-", " ").Contains(" " + word.ToUpper())).ToList());
 
             return found;
-        }
-
-        private void GetAllNouns()
-        {
-            allNouns = File.ReadAllLines(AllNounsLink).ToList();
         }
     }
 }

@@ -6,6 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="DinkToPdf" Version="1.0.8" />
+    <ProjectReference Include="..\SemanticProcessorLib\SemanticProcessorLib.csproj" />
+    <Reference Include="System.Drawing.Common">
+      <HintPath>C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\3.1.0\ref\netcoreapp3.1\System.Drawing.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

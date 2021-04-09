@@ -1,4 +1,5 @@
-﻿using Google.Cloud.Vision.V1;
+﻿using System.Collections.Generic;
+using Google.Cloud.Vision.V1;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -6,7 +7,7 @@ namespace ComputerVisionLib
 {
     public class VisorGoogle
     {
-        public string JSON { get; set; }
+        public Dictionary<string, double> JsonToDictionary { get; set; }
 
         public VisorGoogle(MemoryStream imageStream, string credentialsJson)
         {
@@ -19,7 +20,14 @@ namespace ComputerVisionLib
 
             var response = client.DetectLabels(image);
 
-            JSON = JsonConvert.SerializeObject(response, Formatting.Indented);
+            var dictionary = new Dictionary<string, double>();
+
+            foreach (var label in response)
+            {
+                dictionary.Add(label.Description, label.Score);
+            }
+
+            JsonToDictionary = dictionary;
         }
     }
 }
