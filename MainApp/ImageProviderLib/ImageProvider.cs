@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
@@ -9,13 +10,16 @@ namespace ImageProviderLib
     {
         public string SampleImageUrl { get; set; }= @"https://picsum.photos/480/640";
         public Image Image { get; set; }
+        public MemoryStream ImageStream { get; set; }
 
-        public ImageProvider ()
+        public ImageProvider (string tempImagePath)
         {
             Image = DownloadImage(SampleImageUrl);
+            ImageStream = ImageToStream();
+            File.WriteAllBytes(tempImagePath, ImageStream.ToArray());
         }
 
-        public MemoryStream ImageToStream()
+        private MemoryStream ImageToStream()
         {
             var imageStream = new MemoryStream();
             Image.Save(imageStream, ImageFormat.Png);

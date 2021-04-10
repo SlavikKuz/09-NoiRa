@@ -1533,7 +1533,8 @@
       "PlayerLib/1.0.0": {
         "dependencies": {
           "NAudio": "2.0.0",
-          "NAudio.Lame": "2.0.0"
+          "NAudio.Lame": "2.0.0",
+          "SemanticProcessorLib": "1.0.0"
         },
         "runtime": {
           "PlayerLib.dll": {}
@@ -1544,6 +1545,7 @@
       },
       "SemanticProcessorLib/1.0.0": {
         "dependencies": {
+          "ComputerVisionLib": "1.0.0",
           "Newtonsoft.Json": "13.0.1"
         },
         "runtime": {

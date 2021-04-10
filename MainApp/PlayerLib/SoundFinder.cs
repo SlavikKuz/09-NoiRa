@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SemanticProcessorLib;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,24 +11,24 @@ namespace PlayerLib
         private const string BacksDirectory = @"F:\Noiset\Backs\";
         private const string EventDirectory = @"F:\Noiset\Event\";
 
-        private List<string> allBackFiles { get; set; }
-        private List<string> allFxFiles { get; set; }
+        private List<string> allBacksFiles { get; set; }
+        private List<string> allEventFiles { get; set; }
 
-        public List<string> SoundLinksBacks { get; set; }
-        public List<string> SoundLinksFX { get; set; }
+        public List<string> BacksSoundLinks { get; set; }
+        public List<string> EventSoundLinks { get; set; }
 
-        public SoundFinder(IEnumerable<string> imageWords, bool processLib)
+        public SoundFinder(SemanticImage results, bool processLib = false)
         {
             if(processLib)
                 ProcessLib(30);
 
-            //MP3
+            var words = results.Words.Select(w => w.Word);
 
-            allBackFiles = Directory.GetFiles(BacksDirectory, "*.wav", SearchOption.AllDirectories).ToList();
-            SoundLinksBacks = FindSoundFiles(imageWords, allBackFiles);
+            allBacksFiles = Directory.GetFiles(BacksDirectory, "*.wav", SearchOption.AllDirectories).ToList();
+            BacksSoundLinks = FindSoundFiles(words, allBacksFiles);
 
-            allFxFiles = Directory.GetFiles(EventDirectory, "*.wav", SearchOption.AllDirectories).ToList();
-            SoundLinksFX = FindSoundFiles(imageWords, allFxFiles);
+            allEventFiles = Directory.GetFiles(EventDirectory, "*.wav", SearchOption.AllDirectories).ToList();
+            EventSoundLinks = FindSoundFiles(words, allEventFiles);
         }
 
         public void ProcessLib(int soundLength)
@@ -52,11 +53,14 @@ namespace PlayerLib
         {
             var found = new List<string>();
 
-            found.AddRange(allFiles.Where(f => 
-                f.Replace("_"," ").Replace("-"," ").Contains(" "+word)).ToList());
-
-            found.AddRange(allFiles.Where(f =>
-                f.Replace("_", " ").Replace("-", " ").Contains(" " + word.ToUpper())).ToList());
+            var wordVariations = new List<string>()
+                {word, word.ToUpper(), word[0].ToString().ToUpper() + word.Substring(1)};
+            
+            foreach (var w in wordVariations)
+            {
+                found.AddRange(allFiles.Where(f =>
+                    f.Replace("_", " ").Replace("-", " ").Contains(" " + w)).ToList());
+            }
 
             return found;
         }

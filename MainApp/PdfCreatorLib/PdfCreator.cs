@@ -2,6 +2,7 @@
 using System.IO;
 using DinkToPdf;
 using SemanticProcessorLib;
+using SemanticProcessorLib.Models;
 
 namespace PdfCreatorLib
 {

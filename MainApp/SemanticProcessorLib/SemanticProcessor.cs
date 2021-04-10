@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using ComputerVisionLib;
 using Newtonsoft.Json;
 using SemanticProcessorLib.Models;
 
@@ -24,11 +25,11 @@ namespace SemanticProcessorLib
         };
 
 
-        public SemanticProcessor(string fromAmazon, string fromAzure, Dictionary<string,double> fromGoogle)
+        public SemanticProcessor(VisorResults results)
         {
-            _fromAmazon = JsonConvert.DeserializeObject<DescriptionAmazon>(fromAmazon);
-            _fromAzure = JsonConvert.DeserializeObject<DescriptionAzure>(fromAzure);
-            _fromGoogle = fromGoogle;
+            _fromAmazon = JsonConvert.DeserializeObject<DescriptionAmazon>(results.VisorAmazon.JSON);
+            _fromAzure = JsonConvert.DeserializeObject<DescriptionAzure>(results.VisorAzure.JSON);
+            _fromGoogle = results.VisorGoogle.JsonToDictionary;
             _allWords = GetAlltWords();
             
             _words = new List<WordScore>();

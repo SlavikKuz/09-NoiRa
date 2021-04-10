@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using SemanticProcessorLib.Models;
 
-namespace SemanticProcessorLib
+namespace SemanticProcessorLib.Models
 {
     public class SemanticImage
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace ComputerVisionLib
+namespace WebAPI
 {
     public class KeysLib
     {
