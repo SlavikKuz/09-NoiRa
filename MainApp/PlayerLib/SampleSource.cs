@@ -7,7 +7,8 @@ namespace PlayerLib
     {
         public static SampleSource CreateFromWaveFile(string fileName)
         {
-            using (var reader = new WaveFileReader(fileName))
+            //using (var reader = new WaveFileReader(fileName))
+            using (var reader = new Mp3FileReader(fileName))
             {
                 var sp = reader.ToSampleProvider();
                 var sourceSamples = (int)(reader.Length / (reader.WaveFormat.BitsPerSample / 8));

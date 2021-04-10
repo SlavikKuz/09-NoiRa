@@ -38,7 +38,6 @@
           "PdfCreatorLib": "1.0.0",
           "PlayerLib": "1.0.0",
           "SemanticProcessorLib": "1.0.0",
-          "SoundFinderLib": "1.0.0",
           "Accessibility": "4.0.0.0",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -742,6 +741,20 @@
         },
         "compile": {
           "lib/netstandard2.0/NAudio.Core.dll": {}
+        }
+      },
+      "NAudio.Lame/2.0.0": {
+        "dependencies": {
+          "NAudio.Core": "2.0.0"
+        },
+        "runtime": {
+          "lib/netstandard2.0/NAudio.Lame.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.0.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/NAudio.Lame.dll": {}
         }
       },
       "NAudio.Midi/2.0.0": {
@@ -1520,24 +1533,13 @@
       "PlayerLib/1.0.0": {
         "dependencies": {
           "NAudio": "2.0.0",
-          "ResamplerLib": "1.0.0"
+          "NAudio.Lame": "2.0.0"
         },
         "runtime": {
           "PlayerLib.dll": {}
         },
         "compile": {
           "PlayerLib.dll": {}
-        }
-      },
-      "ResamplerLib/1.0.0": {
-        "dependencies": {
-          "NAudio.Wasapi": "2.0.0"
-        },
-        "runtime": {
-          "ResamplerLib.dll": {}
-        },
-        "compile": {
-          "ResamplerLib.dll": {}
         }
       },
       "SemanticProcessorLib/1.0.0": {
@@ -1549,17 +1551,6 @@
         },
         "compile": {
           "SemanticProcessorLib.dll": {}
-        }
-      },
-      "SoundFinderLib/1.0.0": {
-        "dependencies": {
-          "NAudio.Core": "2.0.0"
-        },
-        "runtime": {
-          "SoundFinderLib.dll": {}
-        },
-        "compile": {
-          "SoundFinderLib.dll": {}
         }
       },
       "Accessibility/4.0.0.0": {
@@ -3571,6 +3562,13 @@
       "path": "naudio.core/2.0.0",
       "hashPath": "naudio.core.2.0.0.nupkg.sha512"
     },
+    "NAudio.Lame/2.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-/wUf0rkix9nvhJUbIXtgc7w4MLBDyIYLkXvkP2lcuAl1VEm982X27vR0xdPNKeKVSTMLi7+imwpfTsursPdaMg==",
+      "path": "naudio.lame/2.0.0",
+      "hashPath": "naudio.lame.2.0.0.nupkg.sha512"
+    },
     "NAudio.Midi/2.0.0": {
       "type": "package",
       "serviceable": true,
@@ -4151,17 +4149,7 @@
       "serviceable": false,
       "sha512": ""
     },
-    "ResamplerLib/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
     "SemanticProcessorLib/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "SoundFinderLib/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

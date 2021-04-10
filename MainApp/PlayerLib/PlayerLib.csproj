@@ -6,10 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="NAudio" Version="2.0.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ResamplerLib\ResamplerLib.csproj" />
+    <PackageReference Include="NAudio.Lame" Version="2.0.0" />
   </ItemGroup>
 
 

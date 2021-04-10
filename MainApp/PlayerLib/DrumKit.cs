@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NAudio.Wave;
-using ResamplerLib;
 
 namespace PlayerLib
 {
@@ -27,7 +26,7 @@ namespace PlayerLib
 
             foreach (var i in soundScape)
             {
-                var resampler = new Resampler(i.Link);
+                var resampler = new WavResampler(i.Link);
                 resampler.Resample();
 
                 i.SoundSample = SampleSource.CreateFromWaveFile(i.Link);

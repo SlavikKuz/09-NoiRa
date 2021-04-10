@@ -15,7 +15,6 @@
     <ProjectReference Include="..\PdfCreatorLib\PdfCreatorLib.csproj" />
     <ProjectReference Include="..\PlayerLib\PlayerLib.csproj" />
     <ProjectReference Include="..\SemanticProcessorLib\SemanticProcessorLib.csproj" />
-    <ProjectReference Include="..\SoundFinderLib\SoundFinderLib.csproj" />
   </ItemGroup>
 
 

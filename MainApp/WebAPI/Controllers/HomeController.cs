@@ -1,26 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Printing;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Security;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Amazon.Runtime.Internal.Settings;
 using Microsoft.AspNetCore.Mvc;
 using ComputerVisionLib;
 using ImageProviderLib;
 using NAudio.Wave;
-using Newtonsoft.Json;
 using PlayerLib;
 using SemanticProcessorLib;
-using SoundFinderLib;
 using PdfCreatorLib;
 using WebAPI.Models;
 
@@ -45,7 +30,7 @@ namespace WebAPI.Controllers
             var semanticResult = semanticProcessor.GetResult();
             var pdf = new PdfCreator(semanticResult, imagePath, Environment.CurrentDirectory + @"\wwwroot\source\noiset.pdf");
 
-            var soundFinder = new SoundFinder(semanticResult.Words.Select(w=>w.Word).ToList(), false);
+            var soundFinder = new SoundFinder(semanticResult.Words.Select(w=>w.Word).ToList(), true);
 
             var kit = new DrumKit(soundFinder.SoundLinksBacks, soundFinder.SoundLinksFX);
             var pattern = new DrumPattern(kit.SoundScapes);
