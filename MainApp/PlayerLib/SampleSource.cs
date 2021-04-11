@@ -5,7 +5,7 @@ namespace PlayerLib
 {
     public class SampleSource
     {
-        public static SampleSource CreateFromWaveFile(string fileName)
+        public static SampleSource CreateFromMp3File(string fileName)
         {
             //using (var reader = new WaveFileReader(fileName))
             using (var reader = new Mp3FileReader(fileName))

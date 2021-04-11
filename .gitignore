@@ -2,7 +2,8 @@
 [Tt]humbs.db
 *.DS_Store
 
-MainApp/WebAPI/wwwroot/source/Keys.txt
+MainApp/WebAPI/wwwroot/source/
+Noiset/
 
 #Visual Studio files
 *.[Oo]bj

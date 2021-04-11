@@ -14,6 +14,8 @@ namespace PlayerLib
 
         public DrumKit(List<string> soundLinksBack, List<string> soundLinksFx)
         {
+
+            //TO DO: consider adjusted
             var randomSelectedBack = GetRandomBack(soundLinksBack);
             var randomSelectedFx = GetRandomFx(soundLinksFx);
             
@@ -26,11 +28,8 @@ namespace PlayerLib
 
             foreach (var i in soundScape)
             {
-                var resampler = new WavResampler(i.Link);
-                resampler.Resample();
-
-                i.SoundSample = SampleSource.CreateFromWaveFile(i.Link);
-                var reader = new WaveFileReader(i.Link);
+                i.SoundSample = SampleSource.CreateFromMp3File(i.Link);
+                var reader = new Mp3FileReader(i.Link);
                 i.Steps = (int) reader.TotalTime.Duration().TotalSeconds * 2;
             }
 

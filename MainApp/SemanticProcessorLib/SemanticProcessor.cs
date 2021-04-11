@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using ComputerVisionLib;
 using Newtonsoft.Json;
 using SemanticProcessorLib.Models;
@@ -11,10 +8,10 @@ namespace SemanticProcessorLib
 {
     public class SemanticProcessor
     {
-        private DescriptionAmazon _fromAmazon;
-        private DescriptionAzure _fromAzure;
-        private Dictionary<string,double> _fromGoogle;
-        private List<string> _allWords;
+        private readonly DescriptionAmazon _fromAmazon;
+        private readonly DescriptionAzure _fromAzure;
+        private readonly Dictionary<string,double> _fromGoogle;
+        private readonly List<string> _allWords;
 
         private List<WordScore> _words { get; set; }
 

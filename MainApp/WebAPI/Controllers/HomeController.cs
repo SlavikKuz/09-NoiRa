@@ -23,12 +23,13 @@ namespace WebAPI.Controllers
             var semanticProcessor = new SemanticProcessor(computerVision.Results);
             var semanticResult = semanticProcessor.GetResult();
             new PdfCreator(semanticResult, _tempImagePath, _tempPdfPath);
-            var soundFinder = new SoundFinder(semanticResult, true);
+            var soundFinder = new SoundFinder(semanticResult); //add true
 
-            var kit = new DrumKit(soundFinder.BacksSoundLinks, soundFinder.EventSoundLinks);
+            var kit = new DrumKit(soundFinder.BacksSoundLinks.Select(w=>w.Key).ToList(),
+                soundFinder.EventSoundLinks.Select(w => w.Key).ToList());
+            
             var pattern = new DrumPattern(kit.SoundScapes);
             var patternSequencer = new DrumPatternSampleProvider(pattern, kit) { Tempo = 100 };
-
             var waveOut = new WaveOut();
             waveOut.Init(patternSequencer);
             waveOut.Play();
@@ -38,12 +39,12 @@ namespace WebAPI.Controllers
                 Image = imageProvider.ImageStream.ToArray(),
                 ImageCaptions = semanticResult.ImageCaption,
                 ImageDescription = semanticResult.Words.Select(w => w.Word).ToList(),
-                BackSounds = soundFinder.BacksSoundLinks,
+                BackSounds = soundFinder.BacksSoundLinks.Select(w => w.Key).ToList(),
                 Color = semanticResult.Color,
                 LinksToPlay = kit.LinksToPlay
             };
 
-            model.BackSounds.AddRange(soundFinder.EventSoundLinks);
+            model.BackSounds.AddRange(soundFinder.EventSoundLinks.Select(w => w.Key).ToList());
 
             return View(model);
         }

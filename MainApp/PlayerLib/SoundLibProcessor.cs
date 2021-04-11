@@ -14,12 +14,22 @@ namespace PlayerLib
         private const string TargetEventDirectory = @"F:\Noiset\Event\";
         private const string TargetBadDirectory = @"F:\Noiset\bad\";
 
+        private const string FileList = @"F:\Noiset\AllOriginFiles.txt";
+
         private List<string> AllOriginWavFiles { get; set; }
         private List<string> BadOriginWavFiles { get; set; }
 
         public SoundLibProcessor()
         {
-            AllOriginWavFiles = Directory.GetFiles(SoundOrigin, "*.wav", SearchOption.AllDirectories).ToList();
+            if (File.Exists(FileList))
+            {
+                AllOriginWavFiles = File.ReadAllLines(FileList).ToList();
+            }
+            else
+            {
+                AllOriginWavFiles = Directory.GetFiles(SoundOrigin, "*.wav", SearchOption.AllDirectories).ToList();
+                File.WriteAllLines(FileList, AllOriginWavFiles);
+            }
         }
 
         public void GetBacksMp3Samples(int lengthSeconds)
@@ -86,10 +96,28 @@ namespace PlayerLib
 
         private void ConverTotMp3(string sourceFileName, string targetMp3File, LAMEPreset preset)
         {
-            using (var reader = new AudioFileReader(sourceFileName))
-            using (var writer = new LameMP3FileWriter(targetMp3File, reader.WaveFormat, preset))
+            var resampledFile = sourceFileName + ".res.wav";
+            try
             {
-                reader.CopyTo(writer);
+                using (var reader = new MediaFoundationReader(sourceFileName))
+                using (var resampler = new MediaFoundationResampler(reader, new WaveFormat(48000, 16, 2)))
+                {
+                    WaveFileWriter.CreateWaveFile(resampledFile, resampler);
+                }
+
+                using (var reader = new WaveFileReader(resampledFile))
+                using (var writer = new LameMP3FileWriter(targetMp3File, reader.WaveFormat, preset))
+                {
+                    reader.CopyTo(writer);
+                }
+            }
+            catch
+            {
+                File.Delete(targetMp3File);
+            }
+            finally
+            {
+                File.Delete(resampledFile);
             }
         }
     }
