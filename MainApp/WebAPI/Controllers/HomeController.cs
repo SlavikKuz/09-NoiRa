@@ -7,23 +7,29 @@ using NAudio.Wave;
 using PlayerLib;
 using SemanticProcessorLib;
 using PdfCreatorLib;
+using SemanticProcessorLib.Models;
 using WebAPI.Models;
+using ComputerHearingLib;
 
 namespace WebAPI.Controllers
 {
     public class HomeController : Controller
     {
         private readonly string _tempImagePath = Environment.CurrentDirectory + @"\wwwroot\source\temp.png";
-        private readonly string _tempPdfPath = Environment.CurrentDirectory + @"\wwwroot\source\noiset.pdf";
+        private readonly string _tempPdfPath = Environment.CurrentDirectory + @"\wwwroot\source\temp.pdf";
 
         public IActionResult Index()
         {
+            var ch = new ComputerHearing();
+
+            var soundFinder = new SoundFinder(new SemanticImage(), true); //add true
+
             var imageProvider = new ImageProvider(_tempImagePath);
             var computerVision = new ComputerVision(imageProvider.ImageStream, new KeysLib());
             var semanticProcessor = new SemanticProcessor(computerVision.Results);
             var semanticResult = semanticProcessor.GetResult();
             new PdfCreator(semanticResult, _tempImagePath, _tempPdfPath);
-            var soundFinder = new SoundFinder(semanticResult); //add true
+            //var soundFinder = new SoundFinder(semanticResult, true); //add true
 
             var kit = new DrumKit(soundFinder.BacksSoundLinks.Select(w=>w.Key).ToList(),
                 soundFinder.EventSoundLinks.Select(w => w.Key).ToList());

@@ -24,8 +24,8 @@ namespace PlayerLib
         public SoundFinder(SemanticImage results, bool processLib = false)
         {
             if (processLib)
-            { 
-                ProcessLib(30);
+            {
+                var soundLibProcessor = new SoundLibProcessor();
                 NormalizeFilenames(BacksDirectory, EventDirectory);
             }
 
@@ -36,14 +36,6 @@ namespace PlayerLib
 
             allEventFiles = Directory.GetFiles(EventDirectory, "*.mp3", SearchOption.AllDirectories).ToList();
             EventSoundLinks = FindSoundFiles(words, allEventFiles);
-        }
-
-        public void ProcessLib(int soundLength)
-        {
-            var soundLibProc = new SoundLibProcessor();
-            soundLibProc.GetBacksMp3Samples(soundLength);
-            soundLibProc.GetEventMp3Samples(soundLength);
-            soundLibProc.RemoveBadFilesFromOrigin();
         }
 
         private Dictionary<string, int> FindSoundFiles(IEnumerable<string> imageWords, List<string> allFiles)

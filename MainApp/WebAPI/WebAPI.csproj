@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ComputerHearingLib\ComputerHearingLib.csproj" />
     <ProjectReference Include="..\ComputerVisionLib\ComputerVisionLib.csproj" />
     <ProjectReference Include="..\ImageProviderLib\ImageProviderLib.csproj" />
     <ProjectReference Include="..\PdfCreatorLib\PdfCreatorLib.csproj" />
