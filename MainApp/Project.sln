@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SemanticProcessorLib", "Sem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfCreatorLib", "PdfCreatorLib\PdfCreatorLib.csproj", "{C8D389E9-9EAB-450B-85D1-E4E41806DAC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComputerHearingLib", "ComputerHearingLib\ComputerHearingLib.csproj", "{72F422B5-C784-4E97-A1C5-9F9BBC2375D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerHearingLib", "ComputerHearingLib\ComputerHearingLib.csproj", "{72F422B5-C784-4E97-A1C5-9F9BBC2375D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{B175ACA2-19AA-43D0-AC73-B01B3F695F5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{72F422B5-C784-4E97-A1C5-9F9BBC2375D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72F422B5-C784-4E97-A1C5-9F9BBC2375D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72F422B5-C784-4E97-A1C5-9F9BBC2375D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B175ACA2-19AA-43D0-AC73-B01B3F695F5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B175ACA2-19AA-43D0-AC73-B01B3F695F5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B175ACA2-19AA-43D0-AC73-B01B3F695F5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B175ACA2-19AA-43D0-AC73-B01B3F695F5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

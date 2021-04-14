@@ -3,6 +3,7 @@
 *.DS_Store
 
 MainApp/WebAPI/wwwroot/source/
+MainApp/UnitTests/bin/
 Noiset/
 
 #Visual Studio files

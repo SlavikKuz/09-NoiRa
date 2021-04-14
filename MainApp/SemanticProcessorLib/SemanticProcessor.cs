@@ -39,7 +39,8 @@ namespace SemanticProcessorLib
         {
             return new SemanticImage()
             {
-                Words = ProcessWords(),
+                //Words = ProcessWords(),
+                Words = _words,
                 Color = _fromAzure.color.accentColor,
                 ImageCaption = _fromAzure.description.captions[0].text
             };
@@ -138,5 +139,6 @@ namespace SemanticProcessorLib
                 .ThenByDescending(w => w.Source)
                 .ThenByDescending(w => w.Score).ToList();
         }
+
     }
 }
