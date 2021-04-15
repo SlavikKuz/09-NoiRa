@@ -17,16 +17,18 @@ namespace UnitTests
     public class UnitTests
     {
         private static readonly string _testFolder = @"D:\Repos\09 - Noiset\MainApp\WebAPI\wwwroot\source\tests\";
-        private readonly string _tempImagePath = _testFolder + "temp.png";
-        private readonly string _tempTextPath = _testFolder + DateTime.Now.ToLongDateString() + ".txt";
-
 
         [TestMethod]
         public void TestComputerVision()
         {
-            var image = File.ReadAllBytes(_tempImagePath);
+            var imageFile = _testFolder + DateTime.Now.ToString("u")
+                .Replace(":","-").Replace("Z","") + ".png";
+            var textFile = _testFolder + DateTime.Now.ToString("u")
+                .Replace(":","-").Replace("Z", "") + ".txt";
 
-            var computerVision = new ComputerVision(new MemoryStream(image), new KeysLib());
+            var imageProvider = new ImageProvider(imageFile);
+            var computerVision = new ComputerVision(imageProvider.ImageStream, new KeysLib());
+
             var semanticProcessor = new SemanticProcessor(computerVision.Results);
             var semanticResult = semanticProcessor.GetResult();
 
@@ -54,7 +56,7 @@ namespace UnitTests
             var boldWords = string.Empty;
             foreach (var w in mainWords)
             {
-                boldWords += w + " ";
+                boldWords += w + ", ";
             }
 
             var synonyms = new List<string>();
@@ -63,38 +65,75 @@ namespace UnitTests
             var client = new HttpClient();
             var listSyn = new List<string>();
 
-            foreach (var w in mainWords)
+            //https://rapidapi.com/ipeirotis/api/wikisynonyms
+
+
+
+            var endPoints = new List<string>()
             {
-                var linkStr = new Uri(@"https://wordsapiv1.p.rapidapi.com/words/" + w + "/synonyms");
-                //var linkStr = new Uri(@"https://wordsapiv1.p.rapidapi.com/words/" + w + "/similarTo");
-                var request = new HttpRequestMessage
+                "/hasParts","/hasMembers",
+                "/substanceOf","/hasSubstances","/inCategory", "/synonyms"
+                //,"/typeOf","/partOf","/instanceOf","/hasInstances","/hasTypes","/hasCategories","/similarTo","/also","/entails","/memberOf",
+            };
+
+            var endPointsResult = new List<string>();
+
+            foreach (var point in endPoints)
+            {
+                endPointsResult.Add("-----" + point);
+
+                foreach (var w in mainWords)
                 {
-                    Method = HttpMethod.Get,
-                    RequestUri = linkStr,
-                    Headers =
+                    var endPointString = string.Empty;
+
+                    var linkStr = new Uri(@"https://wordsapiv1.p.rapidapi.com/words/" + w + point);
+
+                    var request = new HttpRequestMessage
                     {
-                        { "x-rapidapi-key", "487bf4f07dmshbedfa5448b44c4bp1d9080jsn475ddc3a38dd" },
-                        { "x-rapidapi-host", "wordsapiv1.p.rapidapi.com" }
-                    },
-                };
+                        Method = HttpMethod.Get,
+                        RequestUri = linkStr,
+                        Headers =
+                        {
+                            {"x-rapidapi-key", "487bf4f07dmshbedfa5448b44c4bp1d9080jsn475ddc3a38dd"},
+                            {"x-rapidapi-host", "wordsapiv1.p.rapidapi.com"}
+                        },
+                    };
 
-                using (var response = client.SendAsync(request).Result)
-                {
-                    response.EnsureSuccessStatusCode();
-                    var body = response.Content.ReadAsStringAsync().Result;
-
-                    var result = JsonConvert.DeserializeObject<Synonim>(body);
-
-                    foreach (var word in result.synonyms ?? result.similarTo)
+                    using (var response = client.SendAsync(request).Result)
                     {
-                        listSyn.Add(word);
+                        response.EnsureSuccessStatusCode();
+                        var body = response.Content.ReadAsStringAsync().Result;
+
+                        var result = JsonConvert.DeserializeObject<Synonim>(body);
+
+                        if (result.synonyms != null)
+                            foreach (var word in result.synonyms)
+                            {
+                                listSyn.Add(word);
+                            }
+
+                        var collection = 
+                            result.typeOf ?? result.hasTypes ?? result.partOf ?? result.hasParts ?? result.instanceOf ?? result.hasInstances ??
+                            result.similarTo ?? result.synonyms ?? result.also ?? result.entails ?? result.memberOf ?? result.hasMembers ?? 
+                            result.substanceOf ?? result.hasSubstances ?? result.inCategory ?? result.hasCategories ?? null;
+
+                        if (collection != null)
+                            foreach (var c in collection)
+                            {
+                                endPointString += c + ", ";
+                            }
+                    }
+
+                    endPointsResult.Add("   " + w);
+                    endPointsResult.Add(endPointString);
+
+                    foreach (var l in listSyn)
+                    {
+                        synonyms.Add(l);
                     }
                 }
 
-                foreach (var l in listSyn)
-                {
-                    synonyms.Add(l);
-                }
+
             }
 
             var clearSynList = synonyms.Distinct();
@@ -145,7 +184,9 @@ namespace UnitTests
                 notRelString
             };
 
-            File.AppendAllLines(_tempTextPath, list);
+            list.AddRange(endPointsResult);
+
+            File.AppendAllLines(textFile, list);
         }
 
         public class Synonim
@@ -153,6 +194,20 @@ namespace UnitTests
             public string word { get; set; }
             public List<string> synonyms { get; set; }
             public List<string> similarTo { get; set; }
+            public List<string> typeOf { get; set; }
+            public List<string> hasTypes { get; set; }
+            public List<string> partOf { get; set; }
+            public List<string> hasParts { get; set; }
+            public List<string> instanceOf { get; set; }
+            public List<string> hasInstances { get; set; }
+            public List<string> also { get; set; }
+            public List<string> entails { get; set; }
+            public List<string> memberOf { get; set; }
+            public List<string> hasMembers { get; set; }
+            public List<string> substanceOf { get; set; }
+            public List<string> hasSubstances { get; set; }
+            public List<string> hasCategories { get; set; }
+            public List<string> inCategory { get; set; }
         }
     }
 }
